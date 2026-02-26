@@ -7,10 +7,16 @@ import { initDB } from "./config/db";
 const PORT = process.env.PORT || 3000;
 
 async function start() {
-  await initDB();
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+  try {
+    await initDB();
+    console.log("Database connected and table ready");
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error("Failed to start server:", err);
+    process.exit(1);
+  }
 }
 
 start();
